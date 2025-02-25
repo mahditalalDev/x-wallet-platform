@@ -1,6 +1,13 @@
 const form = document.getElementById("login-form");
+const signup = document.getElementById("signup-form");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
+const reg_name = document.getElementById("reg-name");
+const reg_username = document.getElementById("reg-userName");
+const reg_email = document.getElementById("reg-email");
+const reg_phone = document.getElementById("reg-phone");
+const reg_password = document.getElementById("reg-password");
+
 
 function showError(input, message) {
   const errorDiv = input.nextElementSibling;
@@ -40,3 +47,8 @@ form.addEventListener("submit", (event) => {
     // form.submit();
   }
 });
+signup.addEventListener("submit",(event)=>{
+    event.preventDefault(); //preveent auto refresh 
+    console.log(reg_email,reg_password,reg_name,reg_phone,reg_username)
+ 
+})

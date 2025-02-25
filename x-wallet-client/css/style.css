@@ -8,6 +8,31 @@
 html {
   font-family: "Roboto", serif;
 }
+:root {
+    /* Base Colors */
+    --dark-bg: #222831;
+    --dark-gray: #393E46;
+    --teal: #00ADB5;
+    --light-gray: #EEEEEE;
+  
+    /* Primary Colors */
+    --primary-text: #FFFFFF;  /* White for text on dark backgrounds */
+    --primary-bg: #00ADB5;  /* Teal for primary elements */
+  
+    /* Secondary Colors */
+    --secondary-text: #B4B4B8;  /* Light gray for secondary text */
+    --secondary-bg: #393E46;  /* Dark gray for secondary elements */
+  
+    /* Accent Colors */
+    --accent: #F96D00;  /* Bright orange for highlights */
+    --accent-light: #FFB400;  /* Yellow-orange for softer highlights */
+  }
+  
+  body {
+    background-color: var(--dark-bg);
+    color: var(--light-gray);
+    font-family: Arial, sans-serif;
+  }
 /* navigation Bar  */
 nav {
   width: 100%;
@@ -30,7 +55,7 @@ header {
 }
 .nav-menu {
   border-radius: 25%;
-  background: #331;
+  background: var(--light-gray);
   padding: 0.5em 1em;
 }
 .login-section {
@@ -47,30 +72,36 @@ header {
   align-items: center;
   gap: 2%;
 }
-.login .login-hero {
+/* .login  {
   height: 70%;
-  background-color: aqua;
+  background-color: var(--teal);
   width: 60%;
   border-radius: 20px;
+} */
+.login-hero{
+    width: 60%;
+}
+.login-hero,.login-container{
+    height: 80%;
 }
 .login .login-container {
-  height: 70%;
+  /* height: 70%; */
   /* background-color: aqua; */
   width: 40%;
   border-radius: 20px;
 }
 
 .login-container {
-  background-color: #2b2b2b;
+  background-color: var(--secondary-bg);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  box-shadow: 0 0 10px var(--accent-light);
   width: 300px;
   text-align: left;
 }
 
 .login h2 {
-  color: #ffffff;
+  color: var(--primary-text);
   margin-bottom: 15px;
 }
 
@@ -78,7 +109,7 @@ header {
   font-size: 14px;
   display: block;
   margin-top: 10px;
-  color: rgba(255, 255, 255, 0.786);
+  color: var(--secondary-text);
 }
 
 .login input {
@@ -87,15 +118,15 @@ header {
   margin-top: 5px;
   border: none;
   border-radius: 4px;
-  background-color: #3a3a3a;
-  color: #fff;
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
 }
 
 .login button {
   width: 100%;
   padding: 10px;
-  background-color: #00ff80;
-  color: #000;
+  background-color: var(--teal);
+  color: var(--primary-text);
   border: none;
   border-radius: 4px;
   font-weight: bold;
@@ -104,7 +135,8 @@ header {
 }
 
 .login button:hover {
-  background-color: #00cc66;
+  /* background-color: #0; */
+  opacity: 0.9;
 }
 
 .login .links,
@@ -119,13 +151,27 @@ header {
 
 .login .links a,
 span {
+    font-size: 15px;
   text-decoration: none;
-  color: #00ff80;
-  font-weight: bold;
+  color: var(--accent-light);
+  /* font-weight: b; */
 }
 
 .login .links a:hover {
   text-decoration: underline;
+}
+.social-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+}
+.social{
+    background-color: var(--light-gray);
+    /* width: 2em; */
+    margin-top: 1em;
+    padding: 1.2em 1.2em;
+    border-radius: 50%;
 }
 @media (max-width: 825px) {
   .login .login-hero {
