@@ -13,38 +13,71 @@
           <img src="../imgs/x-wallet logo.webp" alt="x-wallet logo" />
         </div>
         <div class="nav-menu">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
-            <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"></path>/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#e8eaed"
+          >
+            <path
+              d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+            ></path>
           </svg>
         </div>
       </header>
     </nav>
+
     <div class="login-section">
       <div class="login">
-        <img class="login-hero" src="../imgs/x-wallet-signup-main-pic.png" ></img>
+        <img
+          class="login-hero"
+          src="../imgs/x-wallet-signup-main-pic.png"
+          alt="Login Hero"
+        />
         <div class="login-container">
           <h2>&gt; Log in</h2>
-          <form>
-            <label>// email or username</label>
-            <input type="text" placeholder="Email or username" required />
+          <form id="login-form">
+            <div class="input-group">
+              <label for="email">Email or Username</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email or username"
+                required
+              />
+              <div class="error-message"></div>
+            </div>
 
-            <label>// password</label>
-            <input type="password" placeholder="Password" required />
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+              <div class="error-message"></div>
+            </div>
 
             <div class="links">
               <span>></span>
-              <a href="#" class="reset">reset pass</a>
+              <a href="#" class="reset">Reset pass</a>
             </div>
 
             <button type="submit" class="login-btn">LOG IN</button>
 
             <div class="links">
-              <span>// don't have an account?</span>
-              <a href="#" class="signup">> sign up</a>
+              <span>// Don't have an account?</span>
+              <a href="#" class="signup">> Sign up</a>
             </div>
           </form>
         </div>
       </div>
     </div>
+
+    <script src="../script/script.js"></script>
   </body>
 </html>
