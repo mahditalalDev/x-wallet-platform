@@ -3,16 +3,11 @@ require '../db.php';
 
 // Allow CORS for all domains
 header("Access-Control-Allow-Origin: *");
-
-// Allow specific methods (POST, OPTIONS)
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-
-// Allow certain headers to be sent (Content-Type, Authorization)
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Respond with status 200 for OPTIONS request
     header("HTTP/1.1 200 OK");
     exit();
 }
@@ -22,7 +17,6 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 // Check for missing fields
 if (!isset($data['name'], $data['email'], $data['phone'], $data['password'])) {
-    // Missing required fields, return 400 Bad Request
     http_response_code(400);
     echo json_encode(["error" => "Please provide all required fields: name, email, phone, and password."]);
     exit;
@@ -32,29 +26,50 @@ if (!isset($data['name'], $data['email'], $data['phone'], $data['password'])) {
 $name = $data['name'];
 $email = $data['email'];
 $phone = $data['phone'];
-$password = password_hash($data['password'], PASSWORD_BCRYPT); // Hash the password
-$isAdmin = 0; // Default is not an admin
-
-// Use email prefix for username if it's not set
+$password = password_hash($data['password'], PASSWORD_BCRYPT);
+$isAdmin = 0; // Default to non-admin
 $username = isset($data['username']) ? $data['username'] : explode('@', $email)[0];
 
-// Prepare the SQL query to insert new user
-$stmt = $conn->prepare("INSERT INTO users (name, username, email, phone, password, isAdmin) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssssi", $name, $username, $email, $phone, $password, $isAdmin);
+$conn->begin_transaction(); // Start transaction
 
-// Execute the query
-if ($stmt->execute()) {
-    // Registration successful, return 201 Created
+try {
+    // Insert new user
+    $stmt = $conn->prepare("INSERT INTO users (name, username, email, phone, password, isAdmin) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $name, $username, $email, $phone, $password, $isAdmin);
+    $stmt->execute();
+    
+    // Get the newly inserted user's ID
+    $userId = $stmt->insert_id;
+    $stmt->close();
+
+    // Insert a wallet for the new user
+    $stmt = $conn->prepare("INSERT INTO wallets (userId, balance, limits) VALUES (?, 0.00, 0.00)");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    
+    // Get the newly created wallet's ID
+    $walletId = $stmt->insert_id;
+    $stmt->close();
+
+    // Update the user with the wallet_id
+    $stmt = $conn->prepare("UPDATE users SET wallet_id = ? WHERE id = ?");
+    $stmt->bind_param("ii", $walletId, $userId);
+    $stmt->execute();
+    $stmt->close();
+
+    // Commit the transaction
+    $conn->commit();
+
+    // Success response
     http_response_code(201);
-    echo json_encode(["message" => "Registration successful. You can now log in."]);
-} else {
-    // Capture the MySQL error and return 500 Internal Server Error
-    $error = $stmt->error;
+    echo json_encode(["message" => "Registration successful. A wallet has been created for the user."]);
+} catch (Exception $e) {
+    $conn->rollback(); // Roll back transaction in case of error
+
     http_response_code(500);
-    echo json_encode(["error" => "Something went wrong. Please try again later. If the issue persists, contact support."]);
+    echo json_encode(["error" => "Something went wrong: " . $e->getMessage()]);
 }
 
-// Close database connection
-$stmt->close();
+// Close connection
 $conn->close();
 ?>
