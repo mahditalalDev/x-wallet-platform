@@ -1,12 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashborad</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
-    <h1>home page of client</h1>
-    
+  <header>
+    <nav>
+      <div class="nav-logo">
+        <img src="./imgs/coollogo_com-23587693.png" alt="x-wallet logo" />
+      </div>
+      <ul class=" d--f jc--sb f--gap-10">
+        <li><p>profile</p></li>
+        <li><p>notifications</p></li>
+        <li><p>chat</p></li>
+      </ul>
+     
+    </nav>
+  </header>
+  <div class="user-dashboard">
+    <div class="title">
+      <p class="title-text">My Wallets</p>
+    </div>
+    <div class="wallets-container d--f f--gap-10">
+      <div class="wallets">
+        <div class="d--f">
+          <h2 id="wallet-balance" style="text-align: center; width: 80%;">2300 <span id="wallet-curreny">USD</span></h2>
+        
+          
+        </h2>
+          <label class="toggle-switch">
+            <input type="checkbox" id="currency-toggle" checked />
+            <span class="slider"></span>
+        </label>
+        </div>
+       
+        <h3 id="wallet-id">wallet ID:1</h3>
+        <h4>scan to Buy</h4>
+        <div  class="QR-dev">
+          <div id="qrcode" class="qrcode"></div>
+
+        </div>
+
+      </div>
+   
+      
+     
+    </div>
+    <div>
+      <div class="title">
+        <p class="title-text">My Transactions</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="table-container">
+      <div class="table-title">
+        <div>My Open Orders</div>
+        <div class="table-button">
+          <button class="button-secondary">Cancel All Buys</button>
+          <button class="button-secondary">Cancel All Sells</button>
+          <button class="button-secondary">Cancel All</button>
+        </div>
+      </div>
+      
+      <table>
+        <thead>
+          <tr class="table-desc">
+            <th><p>Order</p></th>
+            <th>from</th>
+            <th>To</th>
+            <!-- <th>type</th> -->
+            <th>amount</th>
+          </tr>
+        </thead>
+        <tbody class="transactions-body">
+          <tr class="buy">
+            <td colspan="5">
+              <table class="item">
+                <tbody>
+                  <tr>
+                    <td class="type">P@P</td>
+                    <td>mahdi</td>
+                    <td>ali</td>
+                    <!-- <td>p2p</td> -->
+                    <td>99 <span>$$</span></td>
+                    <!-- <td>Cancel</td> -->
+                  </tr>
+                  <tr>
+                    <td colspan="5" class="time">1 hour ago</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr class="buy">
+            <td colspan="5">
+              <table class="item">
+                <tbody>
+                  <tr>
+                    <td class="type">P@P</td>
+                    <td>mahdi</td>
+                    <td>ali</td>
+                    <!-- <td>p2p</td> -->
+                    <td>99 <span>$$</span></td>
+                    <!-- <td>Cancel</td> -->
+                  </tr>
+                  <tr>
+                    <td colspan="5" class="time">1 hour ago</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr class="buy">
+            <td colspan="5">
+              <table class="item">
+                <tbody>
+                  <tr>
+                    <td class="type">P@P</td>
+                    <td>mahdi</td>
+                    <td>ali</td>
+                    <!-- <td>p2p</td> -->
+                    <td>99 <span>$$</span></td>
+                    <!-- <td>Cancel</td> -->
+                  </tr>
+                  <tr>
+                    <td colspan="5" class="time">1 hour ago</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+       
+        
+        </tbody>
+      </table>
+      
+    </div>
+    </div>
+  
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="./script/home.js"></script>
 </body>
 </html>
