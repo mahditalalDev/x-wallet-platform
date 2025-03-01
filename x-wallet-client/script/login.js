@@ -48,7 +48,7 @@ form.addEventListener("submit", (event) => {
         if (response.data.message === "Login successful") {
           // Save user data in localStorage
           localStorage.setItem('user', JSON.stringify(response.data.user));
-          window.location.href = "./../home.html";  // Update with your home page URL
+          window.location.href = "./home.html";  // Update with your home page URL
         }
       })
       .catch(error => {
