@@ -28,7 +28,7 @@ if ($method == 'POST') { // Create a notification
     $userId = isset($_GET['userId']) ? $_GET['userId'] : null;
     $result = $notification->getNotifications($userId);
     sendJsonResponse(200, "getting all notifications", $result);
-} elseif ($method == 'PUT') { 
+} elseif ($method == 'PUT') {
     if (!isset($data['id'], $data['userId'])) {
         sendJsonResponse(400, "Missing required fields: id and userId are mandatory");
     }
@@ -44,14 +44,12 @@ if ($method == 'POST') { // Create a notification
 
     $result = $notification->updateNotification($data['id'], $message, $is_deleted);
     sendJsonResponse(200, "Notification updated successfully", $result);
-}
-
-elseif ($method == 'DELETE') { // Delete (soft delete) a notification
+} elseif ($method == 'DELETE') { // Delete (soft delete) a notification
     if (!isset($data['id'])) {
         sendJsonResponse(400, "Missing notification ID");
     }
     $result = $notification->deleteNotification($data['id']);
-    sendJsonResponse(200, "deleted success",data:$result);
+    sendJsonResponse(200, "deleted success", data: $result);
 } else {
     http_response_code(405);
     echo json_encode(["error" => "Method not allowed"]);

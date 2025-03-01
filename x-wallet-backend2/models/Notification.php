@@ -1,14 +1,17 @@
 <?php
-class Notification {
+class Notification
+{
     private $conn;
     private $table = "notifications";
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
     // Create a new notification and return its full data
-    public function createNotification($userId, $message) {
+    public function createNotification($userId, $message)
+    {
         $query = "INSERT INTO " . $this->table . " (userId, message, is_deleted, createdAt) VALUES (?, ?, 0, NOW())";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("is", $userId, $message);
@@ -20,7 +23,8 @@ class Notification {
     }
 
     // Fetch a notification by ID
-    public function getNotificationById($id) {
+    public function getNotificationById($id)
+    {
         $query = "SELECT * FROM " . $this->table . " WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $id);
@@ -30,7 +34,8 @@ class Notification {
     }
 
     // Get notifications (all or by userId)
-    public function getNotifications($userId = null) {
+    public function getNotifications($userId = null)
+    {
         if ($userId) {
             $query = "SELECT * FROM " . $this->table . " WHERE userId = ?";
             $stmt = $this->conn->prepare($query);
@@ -45,24 +50,25 @@ class Notification {
     }
 
     // Update a notification and return the updated row
-   public function updateNotification($id, $message, $is_deleted) {
-    $query = "UPDATE " . $this->table . " SET message = ?, is_deleted = ? WHERE id = ?";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bind_param("sii", $message, $is_deleted, $id);
-    $stmt->execute();
+    public function updateNotification($id, $message, $is_deleted)
+    {
+        $query = "UPDATE " . $this->table . " SET message = ?, is_deleted = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("sii", $message, $is_deleted, $id);
+        $stmt->execute();
 
-    return $this->getNotificationById($id); // Fetch and return updated notification
-}
+        return $this->getNotificationById($id); // Fetch and return updated notification
+    }
 
 
     // Delete a notification (soft delete) and return the updated row
-    public function deleteNotification($id) {
+    public function deleteNotification($id)
+    {
         $query = "UPDATE " . $this->table . " SET is_deleted = 1 WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
-        
+
         return $this->getNotificationById($id); // Fetch and return soft-deleted notification
     }
 }
-?>
