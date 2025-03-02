@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Page Layout</title>
+    <!-- <link rel="stylesheet" href="../../css/style.css" /> -->
+    <link rel="stylesheet" href="./dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    
+</head>
+<body>
+
+    <header>
+        <nav>
+          <div class="nav-logo">
+            <img src="../../imgs/coollogo_com-23587693.png" alt="x-wallet logo" width="120"  />
+          </div>
+          <ul class="d--f jc--sb f--gap-10">
+            <li><p>profile</p></li>
+            <li><p>notifications</p></li>
+            <li><p>chat</p></li>
+          </ul>
+        </nav>
+      </header>
+
+    <div class="box">
+        <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="content">
+            <div class="wallets">
+                <div class="wallet-card">
+                    <div class="d--f wallet-header"> 
+                      <div class="title-text wallet-header">
+                        <p class="title-text" id="wallet-balance">23000</p>
+                        <span id="wallet-curreny"></span>
+                      </div>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="currency-toggle"  />
+                        <span class="slider"></span>
+                      </label>
+                    </div>
+                    <p id="wallet-id">wallet ID : wq</p>
+                    <div class="QR-dev">
+                        <div id="qrcode" class="qrcode"></div>
+                      </div>
+                </div>
+            
+            </div>
+        </div>
+
+     
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+      const qr = new QRCode(document.getElementById("qrcode"), {
+    text: "Hello World",
+    width: 150,
+    height: 128
+}); 
+
+async function fetchWalletData() {
+    // alert("clicked")
+    // Get user data from localStorage and parse it
+    const userData = localStorage.getItem("user");
+    if (!userData) {
+        alert("User data not found in localStorage!");
+        return;
+    }
+
+    const user = JSON.parse(userData); // Convert JSON string to object
+    const userId = user.id; // Extract userId
+
+    const currency = document.getElementById("currency-toggle").checked ? "USD" : "LBP"; // Detect currency
+
+    try {
+        const response = await axios.get(`http://localhost/SEfactory/x-wallet-platform/x-wallet-backend/wallet/get_wallet.php`, {
+            params: { userId, currency }
+        });
+
+        if (response.data.status === "success" && response.data.wallets.length > 0) {
+            const wallet = response.data.wallets[0]; // Get first wallet (modify if needed)
+            document.getElementById("wallet-balance").innerHTML = `${wallet.balance} <span id="wallet-currency">${wallet.currency}</span>`;
+            document.getElementById("wallet-id").innerText = `Wallet ID: ${wallet.id}`;
+            console.log(wallet.id)
+        } else {
+            document.getElementById("wallet-balance").innerHTML = "No wallet found";
+        }
+    } catch (error) {
+        console.error("Error fetching wallet:", error);
+    }
+}
+
+// Event listener for toggle switch
+document.getElementById("currency-toggle").addEventListener("change", fetchWalletData);
+    </script>
+
+</body>
+</html>

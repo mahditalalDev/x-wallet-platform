@@ -42,13 +42,14 @@ form.addEventListener("submit", (event) => {
 
     console.log("Sending login data:", loginData);
 
-    axios.post("http://localhost/SEfactory/x-wallet-platform/x-wallet-backend/auth/login.php", loginData)
+    axios.post("http://localhost/SEfactory/x-wallet-platform/x-wallet-backend2/user/v1/auth/login.php", loginData)
       .then(response => {
         console.log("Login successful", response.data);
         if (response.data.message === "Login successful") {
+          console.log("login reponse",response.data.data.user)
           // Save user data in localStorage
-          localStorage.setItem('user', JSON.stringify(response.data.user));
-          window.location.href = "./../home.html";  // Update with your home page URL
+          localStorage.setItem('user', JSON.stringify(response.data.data.user));
+          window.location.href = "../pages/user/new_dash.html";  // Update with your home page URL
         }
       })
       .catch(error => {

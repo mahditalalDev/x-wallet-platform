@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Settings</title>
+    <link rel="stylesheet" href="../../css/profile.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <!-- Logo -->
+        <a href="#" class="logo">
+          <img src="../../imgs/coollogo_com-23587693.png" alt="" width="120" />
+        </a>
+
+        <!-- Hamburger Menu (for mobile) -->
+        <button class="menu-btn" id="menu-btn">☰</button>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links" id="nav-links">
+          <li><a href="./new_dash.html">Home</a></li>
+          <li><a href="./profile.html">Profile</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+
+        <!-- Profile & Logout -->
+        <div class="profile-section">
+          <div class="profile-pic">
+            <!-- <img src="https://via.placeholder.com/40" alt="Profile" /> -->
+          </div>
+          <button class="logout-btn">Logout</button>
+        </div>
+      </nav>
+    </header>
+    <div class="profile-container">
+      <h2>Profile Settings</h2>
+      <form>
+        <div class="form-group half-width">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your full name" />
+        </div>
+
+        <div class="form-group half-width">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="text" id="phone" placeholder="Enter your phone number" />
+        </div>
+
+        <div class="form-group half-width">
+          <label for="password">New Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter new password"
+          />
+        </div>
+
+        <div class="form-group half-width">
+          <label for="confirm-password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="Confirm new password"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="wallet-currency">Wallet Currency and ID</label>
+          <select
+            id="wallet-currency"
+            style="background-color: transparent;color: white; font-weight: bold"
+          >
+            <option value="USD">USD</option>
+            <option value="LBP">LBP</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <!-- <label for="wallet">Wallet ID</label> -->
+          <input
+            type="text"
+            id="wallet"
+            style="color: white;font-weight: bold;"
+            placeholder="Wallet ID will appear based on selected currency"
+            disabled
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="tier">Account Tier</label>
+          <select id="tier" disabled>
+            <option value="Basic">Basic</option>
+            <option value="Premium">Premium</option>
+            <option value="VIP">VIP</option>
+          </select>
+        </div>
+
+        <div class="form-group file-upload">
+          <label for="id-document">Upload ID Document</label>
+          <input type="file" id="id-document" onchange="previewFile()" />
+          <div id="file-preview">No file selected</div>
+        </div>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      async function fetchUserData() {
+        // Replace with your actual API URL
+        const apiUrl =
+          "http://localhost/SEfactory/x-wallet-platform/x-wallet-backend2/user/v1/auth/get_user.php?userId=7";
+        // Logic to display Wallet ID
+        try {
+          const response = await axios.get(apiUrl);
+          const user = response.data.data.user.user;
+
+          // Populate user fields
+          document.getElementById("name").value = user.name || "";
+          document.getElementById("username").value = user.username || "";
+          document.getElementById("email").value = user.email || "";
+          document.getElementById("phone").value = user.phone || "";
+
+          // Get wallet elements
+          const walletSelect = document.getElementById("wallet-currency");
+          const walletInput = document.getElementById("wallet");
+
+          // Clear existing options
+          walletSelect.innerHTML = "";
+
+          if (user.wallets && user.wallets.length > 0) {
+            user.wallets.forEach((wallet) => {
+              const option = document.createElement("option");
+              option.value = wallet.currency;
+              option.textContent = wallet.currency;
+              walletSelect.appendChild(option);
+            });
+
+            // Set default wallet
+            walletSelect.value = user.wallets[0].currency;
+            walletInput.value = `Wallet ID: ${user.wallets[0].id}`;
+          }
+
+          // Handle currency change
+          walletSelect.addEventListener("change", function () {
+            const selectedCurrency = this.value;
+            const selectedWallet = user.wallets.find(
+              (w) => w.currency === selectedCurrency
+            );
+
+            if (selectedWallet) {
+              walletInput.value = `Wallet ID: ${selectedWallet.id}`;
+            }
+          });
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          alert("Failed to load user data.");
+        }
+      }
+
+      // Call the function on page load
+      document.addEventListener("DOMContentLoaded", fetchUserData);
+
+      // // Fetch user data using Axios
+      // async function fetchUserData() {
+      //   try {
+      //     const response = await axios.get(apiUrl);
+      //     const user = response.data.data.user.user;
+      //     console.log(response.data.data.user.user);
+
+      //     // Populate user fields
+      //     document.getElementById("name").value = user.name || "";
+      //     document.getElementById("username").value = user.username || "";
+      //     document.getElementById("email").value = user.email || "";
+      //     document.getElementById("phone").value = user.phone || "";
+
+      //     // Populate Wallet Data
+      //     const walletSelect = document.getElementById("wallet-currency");
+      //     const walletInput = document.getElementById("wallet");
+
+      //     if (user.wallets && user.wallets.length > 0) {
+      //       const firstWallet = user.wallets[0]; // Use the first wallet as default
+      //       walletSelect.value = firstWallet.currency;
+      //       walletInput.value = `Wallet ID: ${firstWallet.id}`;
+      //     }
+
+      //     // // Populate Fees (if applicable)
+      //     // if (user.fees) {
+      //     //   console.log("P2P Fees:", user.fees.p2p_fees);
+      //     //   console.log("Withdrawals:", user.fees.withdrawls);
+      //     // }
+      //   } catch (error) {
+      //     console.error("Error fetching user data:", error);
+      //     alert("Failed to load user data.");
+      //   }
+      // }
+
+      // Call the function on page load
+      document.addEventListener("DOMContentLoaded", fetchUserData);
+
+      document
+        .getElementById("wallet-currency")
+        .addEventListener("change", function () {
+          const walletInput = document.getElementById("wallet");
+          const selectedCurrency = this.value;
+
+          // Logic to fetch wallet ID based on selected currency
+          if (selectedCurrency === "USD") {
+            walletInput.value = "USD_Wallet_12345"; // Replace with actual fetching logic
+          } else if (selectedCurrency === "LBP") {
+            walletInput.value = "LBP_Wallet_67890"; // Replace with actual fetching logic
+          }
+        });
+
+      // Form submission logic
+      document
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirm-password").value;
+
+          if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+          }
+
+          // Further form processing and submission
+          alert("Changes saved successfully!");
+        });
+
+      // Function for file preview
+      function previewFile() {
+        const fileInput = document.getElementById("id-document");
+        const preview = document.getElementById("file-preview");
+
+        if (fileInput.files.length > 0) {
+          preview.textContent = `Selected: ${fileInput.files[0].name}`;
+        } else {
+          preview.textContent = "No file selected";
+        }
+      }
+    </script>
+  </body>
+</html>

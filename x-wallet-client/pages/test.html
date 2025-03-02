@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity Verification</title>
+   
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="Verification">
+
+    <header>
+        <nav>
+          <div class="nav-logo">
+            <img src="../imgs/coollogo_com-23587693.png" alt="x-wallet logo" />
+          </div>
+          <ul class="d--f jc--sb f--gap-10">
+            <li><p>profile</p></li>
+            <li><p>notifications</p></li>
+            <li><p>chat</p></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="container">
+        <h1>Verify Your ID</h1>
+        <p id="instruction">Upload a photo of the <strong>front side</strong> of your ID.</p>
+
+        <label class="upload-box">
+            <input type="file" id="file-input" accept="image/*" hidden>
+            Click to Upload
+        </label>
+
+        <img id="uploaded-image" src="" alt="Uploaded Image" width="250" height="120">
+
+        <button class="btn" id="next-btn">Next</button>
+        <button class="btn" id="submit-btn">Submit</button>
+    </div>
+
+    <script>
+       let step = 1; // 1 = front ID, 2 = back ID
+        let frontFile = null;
+        let backFile = null;
+
+        const fileInput = document.getElementById('file-input');
+        const uploadedImage = document.getElementById('uploaded-image');
+        const instruction = document.getElementById('instruction');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.style.display = 'block';
+
+                    if (step === 1) {
+                        frontFile = file; 
+                        nextBtn.style.display = 'block'; // Show "Next" button
+                    } else if (step === 2) {
+                        backFile = file;
+                        submitBtn.style.display = 'block'; // Show "Submit" button
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        nextBtn.addEventListener('click', function() {
+            step = 2;
+            instruction.innerHTML = "Now, upload a photo of the <strong>back side</strong> of your ID.";
+            nextBtn.style.display = 'none'; // Hide "Next" button
+            fileInput.value = ""; // Clear file input
+            uploadedImage.style.display = 'none'; // Hide previous image
+        });
+
+        submitBtn.addEventListener('click', function() {
+            console.log("Front ID Image:", frontFile);
+            console.log("Back ID Image:", backFile);
+            alert("Files uploaded successfully! Check the console.");
+        });
+    </script>
+
+</body>
+</html>
