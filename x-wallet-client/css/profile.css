@@ -1,0 +1,236 @@
+/* Reset Styles */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", serif;
+}
+:root {
+  /* Base Colors */
+  --dark-bg: #222831;
+  --dark-gray: #393e46;
+  --teal: #00adb5;
+  --light-gray: #eeeeee;
+
+  /* Primary Colors */
+  --primary-text: #ffffff; /* White for text on dark backgrounds */
+  --primary-bg: #00adb5; /* Teal for primary elements */
+
+  /* Secondary Colors */
+  --secondary-text: #b4b4b8; /* Light gray for secondary text */
+  --secondary-bg: #393e46; /* Dark gray for secondary elements */
+
+  /* Accent Colors */
+  --accent: #f96d00; /* Bright orange for highlights */
+  --accent-light: #ffb400; /* Yellow-orange for softer highlights */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--light-gray);
+}
+
+/* Header & Navbar */
+header {
+  background: var(--dark-bg);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Navigation Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--primary-text);
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--primary-bg);
+}
+
+/* Profile Section */
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ddd;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Logout Button */
+.logout-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: darkred;
+}
+
+/* Mobile Styles */
+.menu-btn {
+  color: white;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+
+/* Profile Container */
+.profile-container {
+    background: var(--secondary-bg);
+    padding: 30px;
+    /* border-radius: 12px; */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* width: 450px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Heading */
+h2 {
+    color: var(--primary-text);
+    margin-bottom: 20px;
+}
+
+/* Form */
+form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Form Group */
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Half Width Inputs */
+.half-width {
+    width: 48%;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: var(--primary-text);
+}
+
+/* Input Fields */
+input, select {
+    width: 100%;
+    color: var(--primary-text);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    color: var(--dark-bg);
+    transition: border-color 0.3s ease-in-out;
+}
+#tier,wallet-currency {
+    /* background-color:var(---text); */
+    color: red;
+}
+option{
+    /* background-color:var(--dark-gray); */
+    color: var(--accent);
+    font-weight: bold;
+}
+input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* File Upload */
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#file-preview {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-light);
+    color: var(--primary-text);
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    /* background-color: #0056b3; */
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .profile-container {
+        width: 90%;
+    }
+    .half-width {
+        width: 100%;
+    }
+}

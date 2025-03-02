@@ -28,7 +28,10 @@ $walletId = $data['wallet_id'];
 $amount = floatval($data['amount']);
 $currency = $data['currency'];
 $type = $data['type'];
-$fees = floatval($data['fees']);
+$feesPercentage = floatval($data['fees']);  // Fees are in percentage
+
+// Calculate the actual fee value
+$fees = $amount * ($feesPercentage / 100);
 
 // Process transaction using Transaction class
 $transactionModel = new Transaction($conn);

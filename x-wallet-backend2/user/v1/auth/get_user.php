@@ -8,27 +8,31 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
+
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header("HTTP/1.1 200 OK");
     exit();
 }
 
+// Read input data
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Check for missing fields
-if (!isset($data['email'], $data['password'])) {
-    sendJsonResponse(400, "Please provide both email/username and password.");
+// Check if userId is provided
+if (!isset($_GET['userId'])) {
+    sendJsonResponse(400, "User ID is required.");
+    exit();
 }
 
 $userModel = new User($conn);
-$response = $userModel->login($data['email'], $data['password']);
 
-if ($response["success"]) {
-    sendJsonResponse(200, "Login successful", ["user" => $response["user"]]);
+$response = $userModel->read($_GET['userId']);
+
+// Check if user exists
+if (!empty($response)) {
+    sendJsonResponse(200, "User fetched successfully.", ["user" => $response]);
 } else {
-    $statusCode = ($response["error"] === "User not found") ? 404 : 401;
-    sendJsonResponse($statusCode, $response["error"]);
+    sendJsonResponse(404, "User not found.");
 }
 
 $conn->close();

@@ -67,18 +67,44 @@ class User {
     // Read Users data 
     public function read($id = null) {
         if ($id) {
+            // Query to get user details
             $query = "SELECT * FROM " . $this->table . " WHERE id = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $userResult = $stmt->get_result();
+            $userData = $userResult->fetch_assoc();
+    
+            if (!$userData) {
+                return ["success" => false, "error" => "User not found"];
+            }
+    
+            // Query to get fees
+            $queryFees = "SELECT * FROM fees WHERE userId = ?";
+            $stmt = $this->conn->prepare($queryFees);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $feesResult = $stmt->get_result();
+            $feesData = $feesResult->fetch_assoc();
+    
+            // Query to get all wallets of the user
+            $queryWallets = "SELECT * FROM wallets WHERE userId = ?";
+            $stmt = $this->conn->prepare($queryWallets);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $walletsResult = $stmt->get_result();
+            $walletsData = $walletsResult->fetch_all(MYSQLI_ASSOC);
+    
+            // Merge data
+            $userData['fees'] = $feesData ?: [];
+            $userData['wallets'] = $walletsData;
+    
+            return ["success" => true, "user" => $userData];
         } else {
-            $query = "SELECT * FROM " . $this->table;
-            $stmt = $this->conn->prepare($query);
+            return ["success" => false, "error" => "User ID is required"];
         }
-        
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
     public function login($emailOrUsername, $password) {
         $query = "SELECT * from " . $this->table . " WHERE email = ? OR username = ?";
         $stmt = $this->conn->prepare($query);
