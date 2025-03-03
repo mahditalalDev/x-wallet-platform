@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .main {
+            padding: 20px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        /* Transaction Table Styles */
+        .transaction-table {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 600px;
+        }
+
+        thead {
+            background: #007bff;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:hover {
+            background: #f1f1f1;
+            transition: 0.3s ease-in-out;
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .status.success { background: #28a745; color: white; }
+        .status.failed { background: #dc3545; color: white; }
+        .status.pending { background: #ffc107; color: black; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            th, td {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="../x-wallet-client/imgs/coollogo_com-23587693.png" alt="Logo" width="120">
+            </a>
+            <button class="menu-btn" id="menu-btn">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="./new_dash.html">Home</a></li>
+                <li><a href="./profile.html">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="profile-section">
+                <button class="logout-btn">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <ul class="sidebar-links">
+                <li><a href="./dashboard.html">Dashboard</a></li>
+                <li><a href="./profile.html">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </div>
+        
+        <div class="main">
+            <h2>All Transactions</h2>
+            <div class="transaction-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>SenderId</th>
+                            <th>Receiver Id</th>
+                            <th>Type</th>
+                            <th>fees</th>
+                            <th>Amount ($)</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaction-body">
+                        <tr><td colspan="6">Loading transactions...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../script/admin_transactions.js"></script>
+    
+</body>
+</html>
