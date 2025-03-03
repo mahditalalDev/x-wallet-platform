@@ -4,16 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>signup</title>
-    <link rel="icon" type="image/png" href="../imgs/coollogo_com-23587693.png">
+    <link
+      rel="icon"
+      type="image/png"
+      href="../imgs/coollogo_com-23587693.png"
+    />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <nav>
-      <header>
+    <header>
+      <nav>
         <div class="nav-logo">
-          <img src="../imgs/coollogo_com-23587693.png" alt="x-wallet logo"  />
+          <img src="../imgs/coollogo_com-23587693.png" alt="x-wallet logo" />
         </div>
         <div class="nav-menu">
           <svg
@@ -28,8 +32,8 @@
             ></path>
           </svg>
         </div>
-      </header>
-    </nav>
+      </nav>
+    </header>
 
     <div class="login-section">
       <div class="login">
@@ -97,6 +101,17 @@
               />
               <div class="error-message"></div>
             </div>
+            <div class="input-group">
+              <label for="profile-image">Document ID *</label>
+              <input
+                type="file"
+                id="document-id"
+                name="document-id"
+                accept="image/*"
+                required
+              />
+              <div class="error-message"></div>
+            </div>
 
             <button type="submit" class="login-btn">SIGN UP</button>
 
@@ -109,8 +124,6 @@
       </div>
     </div>
 
-  
-
-    <script   src="../script/register.js"></script>
+    <script src="../script/register.js"></script>
   </body>
 </html>

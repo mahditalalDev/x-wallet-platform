@@ -67,8 +67,8 @@ class User {
     // Read Users data 
     public function read($id = null) {
         if ($id) {
-            // Query to get user details
-            $query = "SELECT * FROM " . $this->table . " WHERE id = ?";
+            // Fetch user details including the document
+            $query = "SELECT id, name, username, email, phone, id_document FROM " . $this->table . " WHERE id = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -79,7 +79,7 @@ class User {
                 return ["success" => false, "error" => "User not found"];
             }
     
-            // Query to get fees
+            // Fetch fees
             $queryFees = "SELECT * FROM fees WHERE userId = ?";
             $stmt = $this->conn->prepare($queryFees);
             $stmt->bind_param("i", $id);
@@ -87,7 +87,7 @@ class User {
             $feesResult = $stmt->get_result();
             $feesData = $feesResult->fetch_assoc();
     
-            // Query to get all wallets of the user
+            // Fetch wallets
             $queryWallets = "SELECT * FROM wallets WHERE userId = ?";
             $stmt = $this->conn->prepare($queryWallets);
             $stmt->bind_param("i", $id);
@@ -98,12 +98,95 @@ class User {
             // Merge data
             $userData['fees'] = $feesData ?: [];
             $userData['wallets'] = $walletsData;
+            $userData['id_document'] = !empty($userData['id_document']) ? "http://localhost/uploads/" . $userData['id_document'] : null;
     
             return ["success" => true, "user" => $userData];
         } else {
             return ["success" => false, "error" => "User ID is required"];
         }
     }
+    public function updateUser($userId, $data, $file) {
+        if (!$userId) {
+            return ["status" => "error", "message" => "User ID is required"];
+        }
+    
+        $updates = [];
+        $values = [];
+        $types = ""; // To store parameter types for bind_param
+    
+        if (!empty($data["name"])) {
+            $updates[] = "name = ?";
+            $values[] = $data["name"];
+            $types .= "s"; // 's' for string
+        }
+    
+        if (!empty($data["username"])) {
+            $updates[] = "username = ?";
+            $values[] = $data["username"];
+            $types .= "s";
+        }
+    
+        if (!empty($data["email"])) {
+            $updates[] = "email = ?";
+            $values[] = $data["email"];
+            $types .= "s";
+        }
+    
+        if (!empty($data["phone"])) {
+            $updates[] = "phone = ?";
+            $values[] = $data["phone"];
+            $types .= "s";
+        }
+    
+        if (!empty($data["password"])) {
+            $updates[] = "password = ?";
+            $values[] = password_hash($data["password"], PASSWORD_BCRYPT);
+            $types .= "s";
+        }
+    
+        // Ensure the "uploads" directory exists
+        $uploadDir = __DIR__ . "/../uploads/";
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+    
+        // Handle ID document upload
+        if (!empty($file["id_document"])) {
+            $fileName = basename($file["id_document"]["name"]);
+            $filePath = $uploadDir . $fileName;
+    
+            if (move_uploaded_file($file["id_document"]["tmp_name"], $filePath)) {
+                $updates[] = "id_document = ?";
+                $values[] = $fileName;
+                $types .= "s";
+            } else {
+                return ["status" => "error", "message" => "Failed to upload ID document"];
+            }
+        }
+    
+        if (!empty($updates)) {
+            $sql = "UPDATE users SET " . implode(", ", $updates) . " WHERE id = ?";
+            $values[] = $userId;
+            $types .= "i"; // 'i' for integer (user ID)
+    
+            $stmt = $this->conn->prepare($sql);
+            if (!$stmt) {
+                return ["status" => "error", "message" => "SQL Error: " . $this->conn->error];
+            }
+    
+            // Dynamically bind parameters
+            $stmt->bind_param($types, ...$values);
+    
+            if ($stmt->execute()) {
+                return ["status" => "success", "message" => "User updated successfully"];
+            } else {
+                return ["status" => "error", "message" => "Failed to update user: " . $stmt->error];
+            }
+        } else {
+            return ["status" => "error", "message" => "No fields provided for update"];
+        }
+    }
+    
     
     public function login($emailOrUsername, $password) {
         $query = "SELECT * from " . $this->table . " WHERE email = ? OR username = ?";

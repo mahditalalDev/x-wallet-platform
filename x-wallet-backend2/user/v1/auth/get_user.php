@@ -5,7 +5,7 @@ require '../../../utils/utility.php';
 
 // Allow CORS for all domains
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
@@ -15,9 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Read input data
-$data = json_decode(file_get_contents("php://input"), true);
-
 // Check if userId is provided
 if (!isset($_GET['userId'])) {
     sendJsonResponse(400, "User ID is required.");
@@ -25,10 +22,8 @@ if (!isset($_GET['userId'])) {
 }
 
 $userModel = new User($conn);
-
 $response = $userModel->read($_GET['userId']);
 
-// Check if user exists
 if (!empty($response)) {
     sendJsonResponse(200, "User fetched successfully.", ["user" => $response]);
 } else {
