@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const ctx1 = document.getElementById("myChart").getContext("2d");
   const ctx2 = document.getElementById("typeChart").getContext("2d");
   const transactionCountElement = document.getElementById("transaction-count");
+  
+
 
   // Fetch transactions using Axios
   axios

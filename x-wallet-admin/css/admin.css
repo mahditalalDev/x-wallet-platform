@@ -60,14 +60,16 @@ nav ul li a:hover {
 .container {
   display: flex;
   width: 100%;
-  height: 100vh;
-  background-color: #2a4861;
+  /* height: 100vh; */
+  background-color: var(--light-gray);
 }
 .sidebar {
-  background-color: #393e46;
+  background-color:var(--dark-gray);
   flex: 0 0 200px;
-  height: 100vh;
-  overflow-y: auto;
+  width: 25vw;
+  border-radius: 0px 20px 20px 0px;
+  /* height: 100%; */
+  /* overflow-y: auto; */
   padding: 20px;
 }
 .sidebar li {
@@ -84,18 +86,38 @@ nav ul li a:hover {
   font-size: 1em;
   font-weight: bold;
 }
+.menu-btn{
+    display: none;
+    background-color: var(--light-gray);
+    color: var(--dark-bg);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1em;
+    
+}
+.logout-btn{
+    background-color: var(--accent);
+    color: var(--primary-text);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    border: 1px solid transparent;
+    margin-left: 10px;
+}
 .main {
-  width: 100%;
-  height: 100%;
+  width: 85vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #b4b4b8;
-  /* justify-content: space-between; */
-  /* align-items: center; */
+  background-color: var(--light-gray);
   padding: 10px 20px;
 }
 .clients {
-  /* width: 100%; */
+  min-width: 100px;
+  flex-wrap: wrap;
   /* width: 100px; */
   /* border: 1px solid red; */
   display: flex;
@@ -108,6 +130,10 @@ nav ul li a:hover {
   border-radius: 10px;
   flex-grow: 1;
 }
+canvas {
+    width: 50% !important;
+    height: 50%;
+}
 .stat {
   display: flex;
   align-items: center;
@@ -119,7 +145,7 @@ nav ul li a:hover {
   margin-top: 10px;
   display: flex;
   justify-content: center;
-  /* width: 100%; */
+  width: 100%;
   flex-grow: 1;
   height: 300px;
   margin-bottom: 20px;
@@ -131,5 +157,23 @@ h2 {
 }
 .charts{
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
 
 }
+.active {
+    background-color: wheat;
+    color: var(--dark-gray)!important;
+    
+  }
+@media (max-width: 600px) {
+    .sidebar {
+        width: 100px;
+    }
+    .charts {
+        flex-direction: column;
+    }
+
+  
+} 
