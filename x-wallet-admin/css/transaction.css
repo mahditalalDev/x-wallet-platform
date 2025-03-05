@@ -1,4 +1,3 @@
-
 /* General Styles */
 body {
   font-family: Arial, sans-serif;
@@ -77,6 +76,67 @@ tbody tr:hover {
 .status.pending {
   background: #ffc107;
   color: black;
+}
+
+/* Pop-up Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: white;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.modal h3 {
+  margin-top: 0;
+}
+
+.modal .btn-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn.accept {
+  background: #28a745;
+}
+.btn.reject {
+  background: #dc3545;
+}
+.btn.close {
+  background: #007bff;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* Overlay Background */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
 }
 
 /* Responsive Design */
