@@ -47,7 +47,7 @@ The platform integrates external APIs for payment processing, authentication, an
 ---
 
 ## 📞 Contact
-For inquiries or support, reach out via **[mahdi@example.com](mailto:mahditalal.789@gmail.com)** or open an issue in the repository.
+For inquiries or support, reach out via **[Email](mailto:mahditalal.789@gmail.com)** or open an issue in the repository.
 
 ---
 
