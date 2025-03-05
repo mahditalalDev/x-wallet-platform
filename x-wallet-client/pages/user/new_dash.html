@@ -14,23 +14,21 @@
           <img src="../../imgs/coollogo_com-23587693.png" alt="" width="120" />
         </a>
 
-        <!-- Hamburger Menu (for mobile) -->
-        <button class="menu-btn" id="menu-btn">☰</button>
-
         <!-- Navigation Links -->
         <ul class="nav-links" id="nav-links">
           <li><a href="./new_dash.html">Home</a></li>
           <li><a href="./profile.html">About</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Contact</a></li>
         </ul>
 
         <!-- Profile & Logout -->
+
         <div class="profile-section">
-          <div class="profile-pic">
-            <!-- <img src="https://via.placeholder.com/40" alt="Profile" /> -->
+          <!-- Hamburger Menu (for mobile) -->
+
+          <div class="profile-pic" style="display: flex;justify-content: center;align-items: center;">
+            <button class="menu-btn" id="menu-btn">☰</button>
           </div>
-          <button class="logout-btn">Logout</button>
+          <button class="logout-btn" id="logout-btn">Logout</button>
         </div>
       </nav>
     </header>
@@ -97,7 +95,7 @@
         </div>
 
         <div class="fees">
-          <p class="title">your fees</p>
+          <p class="accent">your fees</p>
           <div>
             <div
               style="
@@ -127,13 +125,9 @@
         </div>
         <div class="fees">
           <div class="balance-header">
-            <p class="title-text">
-              Balance: <span id="balance">Loading...</span>
-            </p>
             <select id="walletSelect">
               <option value="">Select a wallet...</option>
             </select>
-            <button id="fetchWallet">Fetch Wallet</button>
           </div>
           <div class="balance">
             <p id="balance-acc">1200 <span class="currency"> USD</span></p>

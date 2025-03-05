@@ -12,6 +12,12 @@ const balanceElement = document.getElementById("balance-acc");
 const transactionsContainer = document.querySelector(".transactions");
 const balanceTypePopup = document.getElementById("wallet-currency-popup");
 const feesPopup = document.getElementById("fees_popup");
+const logout_Btn = document.getElementById("logout-btn");
+logout_Btn.addEventListener("click", () => {
+  window.localStorage.removeItem("userData");
+  window.location.href = "../../authentication/login.html";
+});
+
 let currentCurrency = "USD"; // Default currency
 let popUp_balance_money_USD = 0.0;
 let popUp_balance_money_LBP = 0.0;
@@ -99,7 +105,6 @@ function populateTransactions(transactions) {
         <p class="title-text flex-flex_grow">To</p>
         <p class="title-text flex-flex_grow">Amount</p>
         <p class="title-text flex-flex_grow">Fees</p>
-        <p class="title-text flex-flex_grow">Action</p>
     </div>
   `;
 
@@ -107,15 +112,12 @@ function populateTransactions(transactions) {
     const transactionElement = document.createElement("div");
     transactionElement.classList.add("transaction");
     transactionElement.innerHTML = `
-        <p class="title-text flex-flex_grow">${transaction.type} <br> ${transaction.createdAt}</p>
-        <p class="title-text flex-flex_grow">${transaction.senderId}</p>
+        <p class="title-text flex-col flex-flex_grow">${transaction.type} <br> <span class="trans_time"> ${transaction.createdAt}</span></p>
+        <p class="title-text  flex-flex_grow">${transaction.senderId}</p>
         <p class="title-text flex-flex_grow">${transaction.receiverId}</p>
         <p class="title-text flex-flex_grow">${transaction.amount} ${transaction.currency}</p>
         <p class="title-text flex-flex_grow">${transaction.fees}</p>
-        <p class="title-text flex-flex_grow action-btn">
-            <button class="accepted-btn" onclick="updateTransactionStatus(${transaction.id}, 'accepted')">Accept</button>
-            <button class="rejected-btn" onclick="updateTransactionStatus(${transaction.id}, 'rejected')">Reject</button>
-        </p>
+        
     `;
     transactionsContainer.appendChild(transactionElement);
   });
@@ -238,7 +240,7 @@ document
     }
 
     // If everything is valid, proceed with sending data
-    sendData(currency,  receiverId, amount, fees, type);
+    sendData(currency, receiverId, amount, fees, type);
   });
 
 function sendData(currency, receiverId, amount, fees, type) {
@@ -256,7 +258,7 @@ function sendData(currency, receiverId, amount, fees, type) {
     type: type,
     fees: fees,
   };
-  console.log(data)
+  console.log(data);
 
   try {
     axios
@@ -273,8 +275,6 @@ function sendData(currency, receiverId, amount, fees, type) {
         document.getElementById("popup-window").style.display = "none";
         // fetchWallet()
         location.reload();
-
-
       });
   } catch (error) {}
 }
