@@ -11,7 +11,7 @@ X-Wallet is a secure and user-friendly **digital wallet platform** that allows u
 |---------------|------------|
 | **Server IP** | `http://15.236.225.13/` |
 | **GitHub Repo** | [X-Wallet Platform](https://github.com/mahditalalDev/x-wallet-platform) |
-| **Live Demo** | [GitHub Pages URL](YOUR_GITHUB_PAGES_URL) |
+| **Live Demo** | [GitHub Pages URL](https://mahditalaldev.github.io/x-wallet-platform/x-wallet-client/authentication/login.html) |
 
 ---
 
