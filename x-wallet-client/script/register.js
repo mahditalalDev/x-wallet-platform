@@ -21,7 +21,7 @@ signup.addEventListener("submit", async (event) => {
     console.log("Sending user data:", userData);
 
     try {
-        const response = await axios.post("http://localhost/SEfactory/x-wallet-platform/x-wallet-backend/auth/register.php", userData, {
+        const response = await axios.post("http://localhost/SEfactory/x-wallet-platform/x-wallet-backend2/user/v1/auth/register.php", userData, {
             headers: { "Content-Type": "application/json" }
         });
 

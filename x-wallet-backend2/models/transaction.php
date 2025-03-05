@@ -36,23 +36,6 @@ class Transaction {
             $stmt->execute();
             $stmt->close();
 
-            // Add balance to receiver
-            $stmt = $this->conn->prepare("SELECT id, balance FROM wallets WHERE userId = ? AND currency = ?");
-            $stmt->bind_param("is", $receiverId, $currency);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $receiverWallet = $result->fetch_assoc();
-            $stmt->close();
-
-            if ($receiverWallet) {
-                $newReceiverBalance = $receiverWallet['balance'] + $amount;
-                $stmt = $this->conn->prepare("UPDATE wallets SET balance = ? WHERE id = ?");
-                $stmt->bind_param("di", $newReceiverBalance, $receiverWallet['id']);
-                $stmt->execute();
-                $stmt->close();
-            } else {
-                throw new Exception("Receiver's wallet not found in the same currency.");
-            }
 
             // Insert transaction record
             $stmt = $this->conn->prepare("INSERT INTO transactions (senderId, receiverId, wallet_id, amount, currency, type, fees) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -105,6 +88,69 @@ class Transaction {
         $stmt->close();
         return $transactions;
     }
+    public function updateStatus($transactionId, $status) {
+        $this->conn->begin_transaction(); // Start transaction
+    
+        try {
+            // Get transaction details
+            $stmt = $this->conn->prepare("SELECT senderId, receiverId, wallet_id, amount, currency, status FROM transactions WHERE id = ?");
+            $stmt->bind_param("i", $transactionId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $transaction = $result->fetch_assoc();
+            $stmt->close();
+    
+            if (!$transaction) {
+                throw new Exception("Transaction not found.");
+            }
+    
+            if ($transaction['status'] !== 'pending') {
+                throw new Exception("Transaction has already been processed.");
+            }
+    
+            $senderId = $transaction['senderId'];
+            $receiverId = $transaction['receiverId'];
+            $walletId = $transaction['wallet_id'];
+            $amount = $transaction['amount'];
+            $currency = $transaction['currency'];
+    
+            if ($status === 'accepted') {
+                // Update transaction status
+                $stmt = $this->conn->prepare("UPDATE transactions SET status = ? WHERE id = ?");
+                $stmt->bind_param("si", $status, $transactionId);
+                $stmt->execute();
+                $stmt->close();
+                
+                // Transfer money to receiver
+                $stmt = $this->conn->prepare("UPDATE wallets SET balance = balance + ? WHERE userId = ? AND currency = ?");
+                $stmt->bind_param("dis", $amount, $receiverId, $currency);
+                $stmt->execute();
+                $stmt->close();
+    
+            } elseif ($status === 'rejected') {
+                // Update transaction status
+                $stmt = $this->conn->prepare("UPDATE transactions SET status = ? WHERE id = ?");
+                $stmt->bind_param("si", $status, $transactionId);
+                $stmt->execute();
+                $stmt->close();
+    
+                // Refund money to sender
+                $stmt = $this->conn->prepare("UPDATE wallets SET balance = balance + ? WHERE id = ?");
+                $stmt->bind_param("di", $amount, $walletId);
+                $stmt->execute();
+                $stmt->close();
+            } else {
+                throw new Exception("Invalid status.");
+            }
+    
+            $this->conn->commit(); // Commit transaction
+            return ["success" => true, "message" => "Transaction status updated successfully"];
+        } catch (Exception $e) {
+            $this->conn->rollback(); // Rollback in case of error
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+    
 
 }
 ?>

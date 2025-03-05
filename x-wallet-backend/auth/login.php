@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
     
     // Verify the password
-    if (password_verify($password, $user['password'])) {
+    if (password_verify($password, hash: $user['password'])) {
         unset($user['password']); // Remove the password before sending the response
         http_response_code(200); // OK
         echo json_encode(["message" => "Login successful", "user" => $user]);

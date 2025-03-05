@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="stylesheet" href="../css/transaction.css" />
+    <title>Transactions</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/transaction.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <a href="#" class="logo">
+          <img
+            src="../../x-wallet-client/imgs/coollogo_com-23587693.png"
+            alt="Logo"
+            width="120"
+          />
+        </a>
+        <button class="menu-btn" id="menu-btn">☰</button>
+
+        <div class="profile-section">
+          <button class="logout-btn">Logout</button>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="sidebar">
+        <ul class="sidebar-links">
+          <li><a href="./dashboard.html">Dashboard</a></li>
+          <li><a href="" class="active">Profile</a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+
+      <div class="main">
+        <h2>All Transactions</h2>
+        <div class="transaction-table">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Sender ID</th>
+                <th>Receiver ID</th>
+                <th>Type</th>
+                <th>Amount ($)</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="transaction-body">
+              <tr>
+                <td colspan="6">Loading transactions...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pop-up Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">
+      <h3>Review Transaction</h3>
+      <!--  -->
+      <p><strong>ID:</strong> <span id="modal-id"></span></p>
+      <p><strong>User ID:</strong> <span id="modal-user"></span></p>
+      <p><strong>Type:</strong> <span id="modal-type"></span></p>
+      <p><strong>Amount:</strong> <span id="modal-amount"></span></p>
+      <div class="btn-container">
+        <button class="btn accept" id="accept-btn">Accept</button>
+        <button class="btn reject" id="reject-btn">Reject</button>
+        <button class="btn close" id="close-btn">Close</button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../script/admin_transactions.js"></script>
+  </body>
+</html>

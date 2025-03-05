@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="../../x-wallet-client/imgs/coollogo_com-23587693.png" alt="Logo" width="120">
+            </a>
+           
+            <div class="profile-section" style="display: flex;justify-content: center;align-items: center;">
+
+                <button class="logout-btn">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <ul class="sidebar-links">
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="./transactions.html">Transactions</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="stat">
+                <div class="clients">
+                    <h2>Users</h2>
+                    <div class="counter">
+                        <p>30</p>
+                    </div>
+                </div>
+                <div class="clients">
+                    <h2>Transactions</h2>
+                    <div class="counter">
+                        <p id="transaction-count">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="charts">
+                <div class="myChart">
+                    <canvas id="myChart"></canvas>
+                
+                <div class="myChart">
+                    <canvas id="typeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+   <script src="../script/admin_dash.js"></script>
+</body>
+</html>

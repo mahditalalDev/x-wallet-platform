@@ -26,6 +26,10 @@
   --accent: #f96d00; /* Bright orange for highlights */
   --accent-light: #ffb400; /* Yellow-orange for softer highlights */
 }
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
 
 body {
   font-family: Arial, sans-serif;
@@ -125,9 +129,15 @@ header {
 .container {
   width: 100%;
   height: 100vh;
-  background-color: rgb(115, 78, 78);
+  background-color: #080404;
   display: flex;
   flex-direction: column;
+}
+.trans_time {
+  margin-top: 3px;
+  /* border: 1px solid red; */
+  font-size: 14px;
+  color: var(--accent-light);
 }
 .fees {
   min-width: 250px;
@@ -139,6 +149,20 @@ header {
   padding: 1em;
   flex-direction: column;
   gap: 25px;
+}
+.accent{
+  color: var(--accent-light);
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.fees:hover {
+  transition: all 0.5s ease;
+
+  background-color: var(--dark-gray);
+}
+.transaction:hover {
+  transition: all 0.5s ease;
+  background-color: var(--dark-bg);
 }
 .fees-container {
   min-width: 250px;
@@ -160,7 +184,8 @@ header {
   color: var(--primary-text);
 }
 .fee-text {
-  font-size: 2em;
+  font-size: 1.5em;
+  color: var(--accent-light);
   /* font-style: ; */
 }
 
@@ -235,6 +260,11 @@ header {
   font-size: 1.2em;
   border: none;
   cursor: pointer;
+}
+.new-p2p:hover {
+  transition: all 0.5s;
+
+  background-color: var(--accent);
 }
 /* Basic styles for the toggle switch */
 .switch {
@@ -366,6 +396,16 @@ input:checked + .slider:before {
 }
 .border {
   border: 1px red solid;
+}
+#walletSelect {
+  background-color: var(--accent-light);
+  padding: 5px 10px;
+  color: var(--dark-bg);
+  border-radius: 15px;
+  font-size: 1em;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 /* Responsive Design */
 @media screen and (max-width: 768px) {
