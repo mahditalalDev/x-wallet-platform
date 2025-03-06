@@ -1,14 +1,18 @@
 <?php
-$server = "localhost";
+$host = "localhost";
 $user = "root"; 
-$pass = "mahditalaldev"; 
+$pass = ""; 
 $dbname = "x-wallet"; 
 
-try {
-    $pdo = new PDO("mysql:host=$server;dbname=$db", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+$conn = new mysqli($host, $user, $pass, $dbname);
+
+if ($conn->connect_error) {
+    die(json_encode(["error" => "Database connection failed: " . $conn->connect_error]));
 }
+// Allow CORS for all domains
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json");
 
 ?>

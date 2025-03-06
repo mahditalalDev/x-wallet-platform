@@ -91,3 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch((error) => console.error("Error fetching transactions:", error));
 });
+const logoutButton = document.getElementById("logout-btn");
+logoutButton.addEventListener("click", function () {
+
+  location.href = "../login.html";
+
+})

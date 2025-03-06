@@ -3,12 +3,6 @@ require '../../connection/connect.php';
 require '../../models/admin.php'; // Include Admin model
 require '../../utils/utility.php';
 
-// Allow CORS for all domains
-header("Access-Control-Allow-Origin: *"); //allow any origin
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Content-Type: application/json");
-
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header("HTTP/1.1 200 OK");

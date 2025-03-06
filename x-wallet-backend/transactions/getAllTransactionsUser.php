@@ -1,9 +1,6 @@
 <?php
 require '../db.php';
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
 if (!isset($_GET['userId'])) {
     http_response_code(400);

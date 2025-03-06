@@ -1,18 +1,17 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+$host = "localhost"; 
+$user = "root"; 
+$pass = ""; 
+$dbname = "x-wallet"; 
 
-$server = "localhost";
-$user = "root";
-$pass = "mahditalaldev";
-$dbname = "x-wallet";
+$conn = new mysqli($host, $user, $pass, $dbname);
 
-try {
-    $pdo = new PDO("mysql:host=$server;dbname=$dbname", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully"; // Debugging message
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+if ($conn->connect_error) {
+    die(json_encode(["error" => "Database connection failed: " . $conn->connect_error]));
 }
-
+// Allow CORS for all domains
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json");
 ?>

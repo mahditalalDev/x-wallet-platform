@@ -3,11 +3,6 @@
 require_once '../../../connection/connect.php';
 require_once '../../../models/Transaction.php';
 $transaction = new Transaction($conn);
-// Allow CORS for all domains
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Content-Type: application/json");
 
 // Check if request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

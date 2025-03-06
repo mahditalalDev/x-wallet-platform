@@ -3,9 +3,6 @@ require '../../../connection/connect.php';
 require '../../../models/transaction.php';
 require '../../../utils/utility.php';
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
 // Validate input
 if (!isset($_GET['userId'])) {

@@ -53,58 +53,59 @@ class Wallet
     
 
 
-    // Update wallet data
-    public function update($walletId, $limits = null, $currency = null, $balance = null)
-    {
-        // Prepare the SQL query to update only the provided fields
-        $query = "UPDATE wallets SET";
-        
-        // We will dynamically build the query based on which fields are provided
-        $params = [];
-        $types = "";
-    
-        // Check if 'limits' is provided and append to the query
-        if ($limits !== null) {
-            $query .= " limits = ?,";
-            $params[] = $limits;
-            $types .= "d";  // 'd' for decimal
-        }
-    
-        // Check if 'currency' is provided and append to the query
-        if ($currency !== null) {
-            $query .= " currency = ?,";
-            $params[] = $currency;
-            $types .= "s";  // 's' for string
-        }
-    
-        // Check if 'balance' is provided and append to the query
-        if ($balance !== null) {
-            $query .= " balance = ?,";
-            $params[] = $balance;
-            $types .= "d";  // 'd' for decimal
-        }
-    
-        // Remove the trailing comma
-        $query = rtrim($query, ",");
-    
-        // Add the WHERE clause to identify the wallet by 'id'
-        $query .= " WHERE id = ?";
-        $params[] = $walletId;
-        $types .= "i"; // 'i' for integer
-    
-        // Prepare the statement
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param($types, ...$params);
-    
-        // Execute the query
-        if ($stmt->execute()) {
-            $stmt->close();
-            return true; // Return true if the update was successful
-        } else {
-            $stmt->close();
-            return false; // Return false if the update failed
-        }
+   // Update wallet data
+public function update($walletId, $limits = null, $currency = null, $balance = null)
+{
+    $query = "UPDATE wallets SET";
+    $params = [];
+    $types = "";
+
+    if ($limits !== null) {
+        $query .= " limits = ?,";
+        $params[] = $limits;
+        $types .= "d"; 
     }
+
+    if ($currency !== null) {
+        $query .= " currency = ?,";
+        $params[] = $currency;
+        $types .= "s";
+    }
+
+    if ($balance !== null) {
+        $query .= " balance = ?,";
+        $params[] = $balance;
+        $types .= "d"; 
+    }
+
+    if (empty($params)) {
+        return false; 
+    }
+
+    $query = rtrim($query, ",");
+
+    $query .= " WHERE id = ?";
+    $params[] = $walletId;
+    $types .= "i"; 
+
+    $stmt = $this->conn->prepare($query);
+    
+    if (!$stmt) {
+        die("Prepare failed: " . $this->conn->error);
+    }
+
+    $stmt->bind_param($types, ...$params);
+
+    if ($stmt->execute()) {
+        $stmt->close();
+        return true; 
+    } else {
+        die("Execute failed: " . $stmt->error); 
+        $stmt->close();
+        return false;
+    }
+}
+
     
 
     // Delete a wallet

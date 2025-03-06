@@ -1,7 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");require_once "../db.php"; // Ensure you have a database connection file
 
 // Check if userId is provided
 if (!isset($_GET["userId"])) {
