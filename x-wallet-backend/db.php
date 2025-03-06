@@ -1,8 +1,8 @@
 <?php
-$host = "localhost"; // Change if needed
-$user = "root"; // Change if needed
-$pass = ""; // Change if needed
-$dbname = "x-wallet"; // Replace with your actual database name
+$host = "localhost"; 
+$user = "root"; 
+$pass = "mahditalaldev"; 
+$dbname = "x-wallet"; 
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
