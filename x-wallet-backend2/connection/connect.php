@@ -1,5 +1,5 @@
 <?php
-$host = "localhost";
+$host = "http://15.236.225.13/";
 $user = "root"; 
 $pass = "mahditalaldev"; 
 $dbname = "x-wallet"; 
