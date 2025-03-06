@@ -1,12 +1,14 @@
 <?php
-$host = "http://15.236.225.13/"; 
+$server = "localhost";
 $user = "root"; 
 $pass = "mahditalaldev"; 
 $dbname = "x-wallet"; 
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die(json_encode(["error" => "Database connection failed: " . $conn->connect_error]));
+try {
+    $pdo = new PDO("mysql:host=$server;dbname=$db", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }
+
 ?>
